@@ -76,7 +76,7 @@ const ctx = canvas.getContext('2d');
 const WIDTH = canvas.width;
 const HEIGHT = canvas.height;
 const FRAMES_PER_SECOND = 100;
-const MAX_POINTS = 100;
+const MAX_POINTS = 200;
 
 const used = [];
 const points = [];
