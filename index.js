@@ -6,8 +6,8 @@ function getRandomInt(min, max) {
 
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
-const WIDTH = 500;
-const HEIGHT = 500;
+const WIDTH = canvas.width;
+const HEIGHT = canvas.height;
 const FRAMES_PER_SECOND = 100;
 
 const used = [];

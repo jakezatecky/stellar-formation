@@ -1,10 +1,22 @@
 <!DOCTYPE html>
 <html lang="en-US">
-    <head>
-        <title>Stellar Formation</title>
-    </head>
-    <body>
-        <canvas id="canvas" width="500" height="500" style="border:1px solid #d3d3d3;"></canvas>
-        <script src="index.js"></script>
-    </body>
+  <head>
+    <title>Stellar Formation</title>
+    <style>
+      .container {
+        display: flex;
+        justify-content: center;
+      }
+
+      canvas {
+        border: 1px solid #d3d3d3;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <canvas id="canvas" width="500" height="500"></canvas>
+    </div>
+    <script src="index.js"></script>
+  </body>
 </html>
