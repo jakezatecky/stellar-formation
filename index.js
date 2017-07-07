@@ -76,13 +76,13 @@ const ctx = canvas.getContext('2d');
 const WIDTH = canvas.width;
 const HEIGHT = canvas.height;
 const FRAMES_PER_SECOND = 100;
+const MAX_POINTS = 100;
 
 const used = [];
 const points = [];
-const maxPoints = 100;
 let numPoints = 0;
 
-while (numPoints < maxPoints) {
+while (numPoints < MAX_POINTS) {
     const x = getRandomInt(0, WIDTH);
     const y = getRandomInt(0, HEIGHT);
 
@@ -100,7 +100,7 @@ while (numPoints < maxPoints) {
         y,
         dx: 0,
         dy: 0,
-        mass: 5,
+        mass: 1,
     });
 
     numPoints += 1;
