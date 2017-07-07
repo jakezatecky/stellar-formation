@@ -1,45 +1,11 @@
 function getRandomInt(min, max) {
     const newMin = Math.ceil(min);
     const newMax = Math.floor(max);
+
     return Math.floor(Math.random() * (newMax - newMin)) + newMin;
 }
 
-const canvas = document.getElementById('canvas');
-const ctx = canvas.getContext('2d');
-const WIDTH = canvas.width;
-const HEIGHT = canvas.height;
-const FRAMES_PER_SECOND = 100;
-
-const used = [];
-const points = [];
-const maxPoints = 100;
-let numPoints = 0;
-
-while (numPoints < maxPoints) {
-    const x = getRandomInt(0, WIDTH);
-    const y = getRandomInt(0, HEIGHT);
-
-    if (used[x] !== undefined && used[x][y] !== undefined) {
-        continue;
-    }
-
-    if (used[x] === undefined) {
-        used[x] = [];
-    }
-
-    used[x][y] = true;
-    points.push({
-        x,
-        y,
-        dx: 0,
-        dy: 0,
-        mass: 5,
-    });
-
-    numPoints += 1;
-}
-
-function plotPositions(points) {
+function plotPositions(ctx, points) {
     points.forEach(({ x, y }, index) => {
         if (index === 0) {
             ctx.fillStyle = '#c33';
@@ -53,7 +19,7 @@ function plotPositions(points) {
     });
 }
 
-function clearCanvas() {
+function clearCanvas(ctx) {
     ctx.clearRect(0, 0, WIDTH, HEIGHT);
 }
 
@@ -105,12 +71,48 @@ function adjustPositions(points) {
     })
 }
 
-plotPositions(points);
+const canvas = document.getElementById('canvas');
+const ctx = canvas.getContext('2d');
+const WIDTH = canvas.width;
+const HEIGHT = canvas.height;
+const FRAMES_PER_SECOND = 100;
+
+const used = [];
+const points = [];
+const maxPoints = 100;
+let numPoints = 0;
+
+while (numPoints < maxPoints) {
+    const x = getRandomInt(0, WIDTH);
+    const y = getRandomInt(0, HEIGHT);
+
+    if (used[x] !== undefined && used[x][y] !== undefined) {
+        continue;
+    }
+
+    if (used[x] === undefined) {
+        used[x] = [];
+    }
+
+    used[x][y] = true;
+    points.push({
+        x,
+        y,
+        dx: 0,
+        dy: 0,
+        mass: 5,
+    });
+
+    numPoints += 1;
+}
+
+// Initial plot
+plotPositions(ctx, points);
 
 setInterval(() => {
-    clearCanvas();
+    clearCanvas(ctx);
     resetVelocities(points);
     gravitatePoints(points);
     adjustPositions(points);
-    plotPositions(points);
+    plotPositions(ctx, points);
 }, 1 / FRAMES_PER_SECOND);
