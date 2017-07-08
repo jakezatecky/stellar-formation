@@ -1,7 +1,7 @@
-const FRAMES_PER_SECOND = 120000;
-const MAX_POINTS = 200;
-const DEFAULT_MASS = 1;
-const DEFAULT_SIZE = 3;
+const FRAMES_PER_SECOND = 1200000;
+const MAX_POINTS = 1000;
+const DEFAULT_MASS = 0.25;
+const DEFAULT_SIZE = 1;
 const GRAVITATIONAL_CONSTANT = 1e-2;
 
 function getRandomInt(min, max) {
@@ -13,7 +13,7 @@ function getRandomInt(min, max) {
 
 function plotPositions(ctx, points) {
     points.forEach(({ x, y, width, height }) => {
-        ctx.fillStyle = '#888';
+        ctx.fillStyle = '#555';
         ctx.fillRect(x, y, width, height);
     });
 }
