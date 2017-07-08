@@ -1,4 +1,4 @@
-const FRAMES_PER_SECOND = 120;
+const FRAMES_PER_SECOND = 120000;
 const MAX_POINTS = 200;
 
 function getRandomInt(min, max) {
@@ -24,13 +24,6 @@ function plotPositions(ctx, points) {
 
 function clearCanvas(ctx) {
     ctx.clearRect(0, 0, WIDTH, HEIGHT);
-}
-
-function resetVelocities(points) {
-    points.forEach((point, index) => {
-        points[index].dx = 0;
-        points[index].dy = 0;
-    })
 }
 
 function gravitatePoints(points) {
@@ -112,8 +105,7 @@ plotPositions(ctx, points);
 
 setInterval(() => {
     clearCanvas(ctx);
-    resetVelocities(points);
     gravitatePoints(points);
     adjustPositions(points);
     plotPositions(ctx, points);
-}, 1 / FRAMES_PER_SECOND);
+}, 1000 / FRAMES_PER_SECOND);
