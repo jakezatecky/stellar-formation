@@ -1,5 +1,6 @@
 const FRAMES_PER_SECOND = 120000;
 const MAX_POINTS = 200;
+const DEFAULT_MASS = 1;
 const GRAVITATIONAL_CONSTANT = 1e-2;
 
 function getRandomInt(min, max) {
@@ -95,7 +96,7 @@ while (numPoints < MAX_POINTS) {
         y,
         dx: 0,
         dy: 0,
-        mass: 1,
+        mass: DEFAULT_MASS,
     });
 
     numPoints += 1;
