@@ -1,6 +1,7 @@
 const FRAMES_PER_SECOND = 120000;
 const MAX_POINTS = 200;
 const DEFAULT_MASS = 1;
+const DEFAULT_SIZE = 3;
 const GRAVITATIONAL_CONSTANT = 1e-2;
 
 function getRandomInt(min, max) {
@@ -11,9 +12,9 @@ function getRandomInt(min, max) {
 }
 
 function plotPositions(ctx, points) {
-    points.forEach(({ x, y }) => {
+    points.forEach(({ x, y, width, height }) => {
         ctx.fillStyle = '#888';
-        ctx.fillRect(x, y, 3, 3);
+        ctx.fillRect(x, y, width, height);
     });
 }
 
@@ -90,6 +91,8 @@ while (numPoints < MAX_POINTS) {
         dx: 0,
         dy: 0,
         mass: DEFAULT_MASS,
+        width: DEFAULT_SIZE,
+        height: DEFAULT_SIZE,
     });
 
     numPoints += 1;
