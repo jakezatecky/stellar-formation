@@ -1,5 +1,6 @@
 const FRAMES_PER_SECOND = 120000;
 const MAX_POINTS = 200;
+const GRAVITATIONAL_CONSTANT = 1e-2;
 
 function getRandomInt(min, max) {
     const newMin = Math.ceil(min);
@@ -49,7 +50,7 @@ function gravitate(a, b) {
     dy /= distance;
 
     // Calculate the force between the object (assumed 1 mass) and planet
-    let force = (a.mass * b.mass) / Math.pow(distance, 2);
+    let force = (a.mass * b.mass * GRAVITATIONAL_CONSTANT) / Math.pow(distance, 2);
 
     // Apply the force to the distance to move
     dx *= force;
