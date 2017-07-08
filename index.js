@@ -11,15 +11,8 @@ function getRandomInt(min, max) {
 }
 
 function plotPositions(ctx, points) {
-    points.forEach(({ x, y }, index) => {
-        if (index === 0) {
-            ctx.fillStyle = '#c33';
-        } else if (index === 1) {
-            ctx.fillStyle = '#33c';
-        } else {
-            ctx.fillStyle = '#eee';
-        }
-
+    points.forEach(({ x, y }) => {
+        ctx.fillStyle = '#888';
         ctx.fillRect(x, y, 3, 3);
     });
 }
