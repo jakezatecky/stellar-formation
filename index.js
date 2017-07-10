@@ -1,4 +1,4 @@
-const FRAMES_PER_SECOND = 1200000;
+const FRAMES_PER_SECOND = 120;
 const MAX_POINTS = 1000;
 const DEFAULT_MASS = 0.25;
 const DEFAULT_SIZE = 1;
@@ -14,9 +14,7 @@ function getRandomInt(min, max) {
 }
 
 function plotPositions(ctx, points) {
-    points.forEach(({ x, y, mass }) => {
-        const volume = calculateVolume(mass);
-
+    points.forEach(({ x, y, volume }) => {
         ctx.fillStyle = '#555';
         ctx.fillRect(x, y, volume, volume);
     });
@@ -95,6 +93,7 @@ while (numPoints < MAX_POINTS) {
         dx: 0,
         dy: 0,
         mass: DEFAULT_MASS,
+        volume: calculateVolume(DEFAULT_MASS),
     });
 
     numPoints += 1;
