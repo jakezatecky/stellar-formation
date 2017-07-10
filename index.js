@@ -1,6 +1,6 @@
 const FRAMES_PER_SECOND = 120;
 const MAX_POINTS = 1000;
-const DEFAULT_MASS = 0.25;
+const DEFAULT_MASS = 1;
 const DEFAULT_SIZE = 1;
 const GRAVITATIONAL_CONSTANT = 1e-2;
 const VOLUME_MULTIPLIER = DEFAULT_SIZE  / DEFAULT_MASS;
@@ -22,6 +22,36 @@ function plotPositions(ctx, points) {
 
 function clearCanvas(ctx) {
     ctx.clearRect(0, 0, WIDTH, HEIGHT);
+}
+
+function coalescePoints(points) {
+    points.forEach((a, indexA) => {
+        points.forEach((b, indexB) => {
+            if (indexA !== indexB && !a.consumed && !b.consumed) {
+                // Component distances to target
+                const dx = b.x - a.x;
+                const dy = b.y - a.y;
+
+                // Overall distances
+                const distance = Math.sqrt((dx * dx) + (dy * dy));
+
+                // If the two points intersect, the more massive point will consume the small point
+                if (distance <= Math.sqrt(a.volume * b.volume) / 2) {
+                    if (a.mass >= b.mass) {
+                        a.mass += b.mass;
+                        a.volume = calculateVolume(a.mass);
+                        b.consumed = true;
+                    } else {
+                        b.mass += a.mass;
+                        b.volume = calculateVolume(b.mass);
+                        a.consumed = true;
+                    }
+                }
+            }
+        })
+    });
+
+    return points.filter(point => !point.consumed);
 }
 
 function gravitatePoints(points) {
@@ -71,7 +101,7 @@ const WIDTH = canvas.width;
 const HEIGHT = canvas.height;
 
 const used = [];
-const points = [];
+let points = [];
 let numPoints = 0;
 
 while (numPoints < MAX_POINTS) {
@@ -104,6 +134,7 @@ plotPositions(ctx, points);
 
 setInterval(() => {
     clearCanvas(ctx);
+    points = coalescePoints(points);
     gravitatePoints(points);
     adjustPositions(points);
     plotPositions(ctx, points);
