@@ -3,6 +3,8 @@ const MAX_POINTS = 1000;
 const DEFAULT_MASS = 0.25;
 const DEFAULT_SIZE = 1;
 const GRAVITATIONAL_CONSTANT = 1e-2;
+const VOLUME_MULTIPLIER = DEFAULT_SIZE  / DEFAULT_MASS;
+const calculateVolume = mass => Math.log(mass * VOLUME_MULTIPLIER * Math.E);
 
 function getRandomInt(min, max) {
     const newMin = Math.ceil(min);
@@ -12,9 +14,11 @@ function getRandomInt(min, max) {
 }
 
 function plotPositions(ctx, points) {
-    points.forEach(({ x, y, width, height }) => {
+    points.forEach(({ x, y, mass }) => {
+        const volume = calculateVolume(mass);
+
         ctx.fillStyle = '#555';
-        ctx.fillRect(x, y, width, height);
+        ctx.fillRect(x, y, volume, volume);
     });
 }
 
@@ -91,8 +95,6 @@ while (numPoints < MAX_POINTS) {
         dx: 0,
         dy: 0,
         mass: DEFAULT_MASS,
-        width: DEFAULT_SIZE,
-        height: DEFAULT_SIZE,
     });
 
     numPoints += 1;
