@@ -38,13 +38,9 @@ function coalescePoints(points) {
                 // If the two points intersect, the more massive point will consume the small point
                 if (distance <= Math.sqrt(a.volume * b.volume) / 2) {
                     if (a.mass >= b.mass) {
-                        a.mass += b.mass;
-                        a.volume = calculateVolume(a.mass);
-                        b.consumed = true;
+                        coalesce(a, b);
                     } else {
-                        b.mass += a.mass;
-                        b.volume = calculateVolume(b.mass);
-                        a.consumed = true;
+                        coalesce(b, a);
                     }
                 }
             }
@@ -52,6 +48,12 @@ function coalescePoints(points) {
     });
 
     return points.filter(point => !point.consumed);
+}
+
+function coalesce(a, b) {
+    a.mass += b.mass;
+    a.volume = calculateVolume(a.mass);
+    b.consumed = true;
 }
 
 function gravitatePoints(points) {
