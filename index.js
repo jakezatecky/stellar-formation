@@ -54,6 +54,15 @@ function coalesce(a, b) {
     a.mass += b.mass;
     a.volume = calculateVolume(a.mass);
     b.consumed = true;
+
+    // Assume elastic collision and transfer kinetic energy from b to slow down a
+    a.dx += getVelocityTransfer(a, b, 'dx');
+    a.dy += getVelocityTransfer(a, b, 'dy');
+}
+
+function getVelocityTransfer(a, b, vector) {
+    // KineticEnergy = (1/2)mv^2
+    return Math.sqrt((b.mass * b[vector] ** 2) / a.mass) * Math.sign(a[vector]) * -1;
 }
 
 function gravitatePoints(points) {
