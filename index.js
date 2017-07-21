@@ -4,7 +4,39 @@ const DEFAULT_MASS = 1;
 const DEFAULT_SIZE = 1;
 const GRAVITATIONAL_CONSTANT = 1e-2;
 const VOLUME_MULTIPLIER = DEFAULT_SIZE  / DEFAULT_MASS;
+const SCROLL_SPEED = 5;
 const calculateVolume = mass => Math.log(mass * VOLUME_MULTIPLIER * Math.E);
+
+const cursor = {
+    x: 0,
+    y: 0,
+};
+
+document.onkeydown = (event) => {
+    if (event.key === 'ArrowLeft') {
+        cursor.x -= SCROLL_SPEED;
+    } else if (event.key === 'ArrowRight') {
+        cursor.x += SCROLL_SPEED;
+    } else if (event.key === 'ArrowUp') {
+        cursor.y -= SCROLL_SPEED;
+    } else if (event.key === 'ArrowDown') {
+        cursor.y += SCROLL_SPEED;
+    }
+
+    updateCursorText();
+};
+
+document.querySelector('#reset-cursor').onclick = () => {
+    cursor.x = 0;
+    cursor.y = 0;
+
+    updateCursorText();
+};
+
+function updateCursorText() {
+    document.querySelector('.cursor-x').innerHTML = String(cursor.x);
+    document.querySelector('.cursor-y').innerHTML = String(cursor.y);
+}
 
 function getRandomInt(min, max) {
     const newMin = Math.ceil(min);
@@ -16,7 +48,7 @@ function getRandomInt(min, max) {
 function plotPositions(ctx, points) {
     points.forEach(({ x, y, volume }) => {
         ctx.fillStyle = '#555';
-        ctx.fillRect(x, y, volume, volume);
+        ctx.fillRect(x - cursor.x, y - cursor.y, volume, volume);
     });
 }
 

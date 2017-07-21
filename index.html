@@ -5,10 +5,13 @@
     <style>
       .container {
         display: flex;
+        flex-direction: column;
+        align-items: center;
         justify-content: center;
       }
 
       canvas {
+        margin-bottom: 10px;
         border: 1px solid #d3d3d3;
       }
     </style>
@@ -16,6 +19,11 @@
   <body>
     <div class="container">
       <canvas id="canvas" width="750" height="750"></canvas>
+      <div class="cursor">
+        <strong>Cursor:</strong>
+        (<span class="cursor-x">0</span>, <span class="cursor-y">0</span>)
+      </div>
+      <button id="reset-cursor" type="button">Reset Cursor</button>
     </div>
     <script src="index.js"></script>
   </body>
