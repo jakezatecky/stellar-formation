@@ -1,4 +1,7 @@
 {
+  "name": "stellar-formation",
+  "version": "0.0.0",
+  "main": "index.js",
   "scripts": {
     "server": "browser-sync start --server --files \"*.js\""
   },
