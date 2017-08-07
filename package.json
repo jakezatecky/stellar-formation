@@ -5,7 +5,7 @@
   "scripts": {
     "server": "browser-sync start --server --files \"*.js\""
   },
-  "dependencies": {
+  "devDependencies": {
     "browser-sync": "^2.18.12"
   }
 }
