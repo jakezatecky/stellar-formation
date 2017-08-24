@@ -7,20 +7,21 @@ const VOLUME_MULTIPLIER = DEFAULT_SIZE  / DEFAULT_MASS;
 const SCROLL_SPEED = 5;
 const calculateVolume = mass => Math.log(mass * VOLUME_MULTIPLIER * Math.E);
 
-const cursor = {
+let cursor = {
     x: 0,
     y: 0,
+    k: 1,
 };
 
 document.onkeydown = (event) => {
     if (event.key === 'ArrowLeft') {
-        cursor.x -= SCROLL_SPEED;
-    } else if (event.key === 'ArrowRight') {
         cursor.x += SCROLL_SPEED;
+    } else if (event.key === 'ArrowRight') {
+        cursor.x -= SCROLL_SPEED;
     } else if (event.key === 'ArrowUp') {
-        cursor.y -= SCROLL_SPEED;
-    } else if (event.key === 'ArrowDown') {
         cursor.y += SCROLL_SPEED;
+    } else if (event.key === 'ArrowDown') {
+        cursor.y -= SCROLL_SPEED;
     }
 
     updateCursorText();
@@ -34,8 +35,8 @@ document.querySelector('#reset-cursor').onclick = () => {
 };
 
 function updateCursorText() {
-    document.querySelector('.cursor-x').innerHTML = String(cursor.x);
-    document.querySelector('.cursor-y').innerHTML = String(cursor.y);
+    document.querySelector('.cursor-x').innerHTML = String(Math.floor(-1 * cursor.x));
+    document.querySelector('.cursor-y').innerHTML = String(Math.floor(-1 * cursor.y));
 }
 
 function getRandomInt(min, max) {
@@ -48,7 +49,7 @@ function getRandomInt(min, max) {
 function plotPositions(ctx, points) {
     points.forEach(({ x, y, volume }) => {
         ctx.fillStyle = '#555';
-        ctx.fillRect(x - cursor.x, y - cursor.y, volume, volume);
+        ctx.fillRect(x, y, volume, volume);
     });
 }
 
@@ -138,6 +139,21 @@ function adjustPositions(points) {
     })
 }
 
+function plotCanvas(ctx, points) {
+    if (cursor !== null) {
+        ctx.save();
+        ctx.clearRect(0, 0, WIDTH, HEIGHT);
+        ctx.translate(cursor.x, cursor.y);
+        ctx.scale(cursor.k, cursor.k);
+    }
+
+    plotPositions(ctx, points);
+
+    if (cursor !== null) {
+        ctx.restore();
+    }
+}
+
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 const WIDTH = canvas.width;
@@ -173,12 +189,23 @@ while (numPoints < MAX_POINTS) {
 }
 
 // Initial plot
-plotPositions(ctx, points);
+plotCanvas(ctx, points);
 
 setInterval(() => {
     clearCanvas(ctx);
     points = coalescePoints(points);
     gravitatePoints(points);
     adjustPositions(points);
-    plotPositions(ctx, points);
+    plotCanvas(ctx, points);
 }, 1000 / FRAMES_PER_SECOND);
+
+d3.select('canvas').call(
+    d3.zoom()
+        .scaleExtent([1 / 2, 4])
+        .on('zoom', zoom)
+);
+
+function zoom() {
+    cursor = d3.event.transform;
+    updateCursorText();
+}
