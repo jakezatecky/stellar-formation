@@ -69,6 +69,11 @@ function updateCursorText() {
 
     document.querySelector('.cursor-x').innerHTML = getText(WIDTH, cursor.x);
     document.querySelector('.cursor-y').innerHTML = getText(HEIGHT, cursor.y);
+
+    // If we are paused, go ahead and plot the current positions
+    if (!interval) {
+        plotCanvas(ctx, points);
+    }
 }
 
 function getRandomInt(min, max) {
