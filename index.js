@@ -28,15 +28,40 @@ document.onkeydown = (event) => {
 };
 
 document.querySelector('#reset-cursor').onclick = () => {
-    cursor.x = 0;
-    cursor.y = 0;
+    cursor.x = getScaledOffset(WIDTH);
+    cursor.y = getScaledOffset(HEIGHT);
 
     updateCursorText();
 };
 
+// Add zoom/dragging functionality
+d3.select('canvas').call(
+    d3.zoom()
+        .scaleExtent([1 / 2, 4])
+        .on('zoom', zoom)
+);
+
+/**
+ * Account for scaling `k` of canvas and return x/y offset.
+ *
+ * @returns {number}
+ */
+function getScaledOffset(originalLength) {
+    return (originalLength - (originalLength * cursor.k)) / 2;
+}
+
+function zoom() {
+    cursor = d3.event.transform;
+    updateCursorText();
+}
+
 function updateCursorText() {
-    document.querySelector('.cursor-x').innerHTML = String(Math.floor(-1 * cursor.x));
-    document.querySelector('.cursor-y').innerHTML = String(Math.floor(-1 * cursor.y));
+    const getText = (originalLength, translation) => String(
+        Math.floor(getScaledOffset(originalLength) - translation)
+    );
+
+    document.querySelector('.cursor-x').innerHTML = getText(WIDTH, cursor.x);
+    document.querySelector('.cursor-y').innerHTML = getText(HEIGHT, cursor.y);
 }
 
 function getRandomInt(min, max) {
@@ -192,15 +217,3 @@ setInterval(() => {
     adjustPositions(points);
     plotCanvas(ctx, points);
 }, 1000 / FRAMES_PER_SECOND);
-
-// Add zoom/dragging functionality
-d3.select('canvas').call(
-    d3.zoom()
-        .scaleExtent([1 / 2, 4])
-        .on('zoom', zoom)
-);
-
-function zoom() {
-    cursor = d3.event.transform;
-    updateCursorText();
-}
