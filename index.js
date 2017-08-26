@@ -22,6 +22,13 @@ document.onkeydown = (event) => {
         cursor.y += SCROLL_SPEED;
     } else if (event.key === 'ArrowDown') {
         cursor.y -= SCROLL_SPEED;
+    } else if (event.key === ' ') {
+        if (interval) {
+            clearInterval(interval);
+            interval = null;
+        } else {
+            interval = startInterval();
+        }
     }
 
     updateCursorText();
@@ -210,10 +217,14 @@ while (numPoints < MAX_POINTS) {
 // Initial plot
 plotCanvas(ctx, points);
 
-setInterval(() => {
-    clearCanvas(ctx);
-    points = coalescePoints(points);
-    gravitatePoints(points);
-    adjustPositions(points);
-    plotCanvas(ctx, points);
-}, 1000 / FRAMES_PER_SECOND);
+const startInterval = () => (
+    setInterval(() => {
+        clearCanvas(ctx);
+        points = coalescePoints(points);
+        gravitatePoints(points);
+        adjustPositions(points);
+        plotCanvas(ctx, points);
+    }, 1000 / FRAMES_PER_SECOND)
+);
+
+let interval = startInterval();
