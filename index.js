@@ -140,18 +140,12 @@ function adjustPositions(points) {
 }
 
 function plotCanvas(ctx, points) {
-    if (cursor !== null) {
-        ctx.save();
-        ctx.clearRect(0, 0, WIDTH, HEIGHT);
-        ctx.translate(cursor.x, cursor.y);
-        ctx.scale(cursor.k, cursor.k);
-    }
-
+    ctx.save();
+    ctx.clearRect(0, 0, WIDTH, HEIGHT);
+    ctx.translate(cursor.x, cursor.y);
+    ctx.scale(cursor.k, cursor.k);
     plotPositions(ctx, points);
-
-    if (cursor !== null) {
-        ctx.restore();
-    }
+    ctx.restore();
 }
 
 const canvas = document.getElementById('canvas');
@@ -199,6 +193,7 @@ setInterval(() => {
     plotCanvas(ctx, points);
 }, 1000 / FRAMES_PER_SECOND);
 
+// Add zoom/dragging functionality
 d3.select('canvas').call(
     d3.zoom()
         .scaleExtent([1 / 2, 4])
