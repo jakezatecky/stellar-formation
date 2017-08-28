@@ -44,7 +44,7 @@ document.querySelector('#reset-cursor').onclick = () => {
 // Add zoom/dragging functionality
 d3.select('canvas').call(
     d3.zoom()
-        .scaleExtent([1 / 2, 4])
+        .scaleExtent([1 / 4, 4])
         .on('zoom', zoom)
 );
 
@@ -69,6 +69,7 @@ function updateCursorText() {
 
     document.querySelector('.cursor-x').innerHTML = getText(WIDTH, cursor.x);
     document.querySelector('.cursor-y').innerHTML = getText(HEIGHT, cursor.y);
+    document.querySelector('.cursor-zoom').innerHTML = cursor.k.toFixed(2);
 
     // If we are paused, go ahead and plot the current positions
     if (!interval) {
