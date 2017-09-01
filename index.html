@@ -2,10 +2,14 @@
 <html lang="en-US">
   <head>
     <title>Stellar Formation</title>
+    <link href="//fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <style>
+      body {
+        font-family: 'Roboto', sans-serif;
+      }
+
       .container {
         display: flex;
-        flex-direction: column;
         align-items: center;
         justify-content: center;
       }
@@ -14,20 +18,31 @@
         margin-bottom: 10px;
         border: 1px solid #d3d3d3;
       }
+
+      .details {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin-left: 15px;
+        list-style: none;
+        padding: 0;
+      }
     </style>
   </head>
   <body>
     <div class="container">
       <canvas id="canvas" width="750" height="750"></canvas>
-      <div class="cursor">
-        <strong>Cursor:</strong>
-        (<span class="cursor-x">0</span>, <span class="cursor-y">0</span>)
-      </div>
-      <button id="reset-cursor" type="button">Reset Cursor</button>
-      <div class="zoom">
-        <strong>Zoom:</strong>
-        <span class="cursor-zoom">1.00</span>
-      </div>
+      <ul class="details">
+        <li class="cursor">
+          <strong>Cursor:</strong>
+          (<span class="cursor-x">0</span>, <span class="cursor-y">0</span>)
+          <button id="reset-cursor" type="button">Reset</button>
+        </li>
+        <li class="zoom">
+          <strong>Zoom:</strong>
+          <span class="cursor-zoom">1.00</span>
+        </li>
+      </ul>
     </div>
     <script src="//d3js.org/d3.v4.min.js"></script>
     <script src="index.js"></script>
