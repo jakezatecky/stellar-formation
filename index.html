@@ -20,12 +20,30 @@
       }
 
       .details {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
+        display: table;
+        width: 225px;
         margin-left: 15px;
         list-style: none;
         padding: 0;
+      }
+
+      .details > li {
+        display: table-row;
+      }
+
+      .details > li > * {
+        display: table-cell;
+        width: 1%;
+        padding: 0 5px;
+      }
+
+      .details > li > .header {
+        text-align: right;
+        font-weight: bold;
+      }
+
+      .details > li > .value {
+        width: 100%;
       }
     </style>
   </head>
@@ -34,13 +52,19 @@
       <canvas id="canvas" width="750" height="750"></canvas>
       <ul class="details">
         <li class="cursor">
-          <strong>Cursor:</strong>
-          (<span class="cursor-x">0</span>, <span class="cursor-y">0</span>)
-          <button id="reset-cursor" type="button">Reset</button>
+          <span class="header">Position</span>
+          <span class="value">
+            (<span class="cursor-x">0</span>, <span class="cursor-y">0</span>)
+          </span>
+          <span class="actions">
+            <button id="reset-cursor" type="button">Reset</button>
+          </span>
         </li>
         <li class="zoom">
-          <strong>Zoom:</strong>
-          <span class="cursor-zoom">1.00</span>
+          <span class="header">Zoom</span>
+          <span class="value">
+            <span class="cursor-zoom">1.00</span>
+          </span>
         </li>
       </ul>
     </div>
