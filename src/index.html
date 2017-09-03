@@ -1,8 +1,18 @@
 <!DOCTYPE html>
-<html lang="en-US">
+<html class="no-js" lang="en-US">
   <head>
-    <title>Stellar Formation</title>
-    <link href="//fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <meta charset="utf-8">
+    <title>React Boilerplate</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" >
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <link href="build/{{css/app.css}}" rel="stylesheet">
+
     <style>
       body {
         font-family: 'Roboto', sans-serif;
@@ -48,27 +58,10 @@
     </style>
   </head>
   <body>
-    <div class="container">
-      <canvas id="canvas" width="750" height="750"></canvas>
-      <ul class="details">
-        <li class="cursor">
-          <span class="header">Position</span>
-          <span class="value">
-            (<span class="cursor-x">0</span>, <span class="cursor-y">0</span>)
-          </span>
-          <span class="actions">
-            <button id="reset-cursor" type="button">Reset</button>
-          </span>
-        </li>
-        <li class="zoom">
-          <span class="header">Zoom</span>
-          <span class="value">
-            <span class="cursor-zoom">1.00</span>
-          </span>
-        </li>
-      </ul>
+    <div class="app" id="mount">
+      <span class="fa fa-circle-o-notch fa-spin"></span>
     </div>
     <script src="//d3js.org/d3.v4.min.js"></script>
-    <script src="index.js"></script>
+    <script src="build/{{js/app.js}}"></script>
   </body>
 </html>
