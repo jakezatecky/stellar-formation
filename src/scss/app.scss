@@ -1,7 +1,48 @@
+$canvas-border: #d3d3d3;
+
 body {
   font-family: 'Open Sans', sans-serif;
 }
 
 .app {
   text-align: center;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: left;
+}
+
+canvas {
+  margin-bottom: 10px;
+  border: 1px solid $canvas-border;
+}
+
+.details {
+  display: table;
+  margin-left: 15px;
+  padding: 0;
+  width: 225px;
+  list-style: none;
+
+  > li {
+    display: table-row;
+
+    > * {
+      display: table-cell;
+      padding: 0 5px;
+      width: 1%;
+    }
+
+    > .header {
+      text-align: right;
+      font-weight: bold;
+    }
+  }
+
+  .value {
+    width: 100%;
+  }
 }
