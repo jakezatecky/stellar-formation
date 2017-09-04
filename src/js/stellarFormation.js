@@ -1,12 +1,14 @@
-export default (props) => {
-    const d3 = window.d3;
+const d3 = window.d3;
+const defaultConfig = {
+    FRAMES_PER_SECOND: 120,
+    MAX_POINTS: 1000,
+    DEFAULT_MASS: 1,
+    DEFAULT_SIZE: 1,
+    GRAVITATIONAL_CONSTANT: 1e-2,
+};
 
-    const FRAMES_PER_SECOND = 120;
-    const MAX_POINTS = 1000;
-    const DEFAULT_MASS = 1;
-    const DEFAULT_SIZE = 1;
-    const GRAVITATIONAL_CONSTANT = 1e-2;
-    const VOLUME_MULTIPLIER = DEFAULT_SIZE  / DEFAULT_MASS;
+export default (props, config = defaultConfig) => {
+    const VOLUME_MULTIPLIER = config.DEFAULT_SIZE  / config.DEFAULT_MASS;
     const SCROLL_SPEED = 5;
     const calculateVolume = mass => Math.log(mass * VOLUME_MULTIPLIER * Math.E);
 
@@ -30,7 +32,7 @@ export default (props) => {
                 clearInterval(interval);
                 interval = null;
             } else {
-                interval = startInterval();
+                interval = startInterval(ctx, points);
             }
         }
 
@@ -164,7 +166,7 @@ export default (props) => {
         dy /= distance;
 
         // Calculate the force between the object (assumed 1 mass) and planet
-        let force = (a.mass * b.mass * GRAVITATIONAL_CONSTANT) / Math.pow(distance, 2);
+        let force = (a.mass * b.mass * config.GRAVITATIONAL_CONSTANT) / Math.pow(distance, 2);
 
         // Apply the force to the distance to move
         dx *= force;
@@ -191,16 +193,26 @@ export default (props) => {
         ctx.restore();
     }
 
+    const startInterval = (ctx, points) => (
+        setInterval(() => {
+            clearCanvas(ctx);
+            points = coalescePoints(points);
+            gravitatePoints(points);
+            adjustPositions(points);
+            plotCanvas(ctx, points);
+        }, 1000 / config.FRAMES_PER_SECOND)
+    );
+
     const canvas = document.getElementById('canvas');
     const ctx = canvas.getContext('2d');
-    const WIDTH = canvas.width;
-    const HEIGHT = canvas.height;
+    const WIDTH = parseFloat(canvas.width);
+    const HEIGHT = parseFloat(canvas.height);
 
     const used = [];
     let points = [];
     let numPoints = 0;
 
-    while (numPoints < MAX_POINTS) {
+    while (numPoints < config.MAX_POINTS) {
         const x = getRandomInt(0, WIDTH);
         const y = getRandomInt(0, HEIGHT);
 
@@ -218,8 +230,8 @@ export default (props) => {
             y,
             dx: 0,
             dy: 0,
-            mass: DEFAULT_MASS,
-            volume: calculateVolume(DEFAULT_MASS),
+            mass: config.DEFAULT_MASS,
+            volume: calculateVolume(config.DEFAULT_MASS),
         });
 
         numPoints += 1;
@@ -228,15 +240,5 @@ export default (props) => {
     // Initial plot
     plotCanvas(ctx, points);
 
-    const startInterval = () => (
-        setInterval(() => {
-            clearCanvas(ctx);
-            points = coalescePoints(points);
-            gravitatePoints(points);
-            adjustPositions(points);
-            plotCanvas(ctx, points);
-        }, 1000 / FRAMES_PER_SECOND)
-    );
-
-    let interval = startInterval();
+    let interval = startInterval(ctx, points);
 }
