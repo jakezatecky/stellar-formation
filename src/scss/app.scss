@@ -21,13 +21,23 @@ canvas {
 }
 
 .details {
-  display: table;
   margin-left: 15px;
-  padding: 0;
-  width: 225px;
-  list-style: none;
+}
 
-  > li {
+.configuration {
+  display: flex;
+  flex-direction: column;
+
+  > button {
+    margin-top: 10px;
+    margin-left: auto;
+  }
+}
+
+.controls {
+  display: table;
+
+  > .form-group {
     display: table-row;
 
     > * {
@@ -38,11 +48,29 @@ canvas {
 
     > .header {
       text-align: right;
+      white-space: nowrap;
       font-weight: bold;
     }
   }
 
   .value {
     width: 100%;
+  }
+}
+
+.cursor {
+  display: flex;
+  margin-top: 20px;
+  padding: 0;
+  list-style: none;
+
+  > li {
+    > * {
+      padding: 0 5px;
+    }
+
+    > .header {
+      font-weight: bold;
+    }
   }
 }
