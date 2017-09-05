@@ -5,6 +5,7 @@ const defaultConfig = {
     DEFAULT_MASS: 1,
     DEFAULT_SIZE: 1,
     GRAVITATIONAL_CONSTANT: 1e-2,
+    FILL: '#555',
 };
 
 const startFormation = (props, config = defaultConfig) => {
@@ -93,7 +94,7 @@ const startFormation = (props, config = defaultConfig) => {
 
     function plotPositions(ctx, points) {
         points.forEach(({ x, y, volume }) => {
-            ctx.fillStyle = '#555';
+            ctx.fillStyle = config.FILL;
             ctx.fillRect(x, y, volume, volume);
         });
     }

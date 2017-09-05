@@ -9,6 +9,7 @@ const configMap = {
     DEFAULT_MASS: 'Initial mass',
     DEFAULT_SIZE: 'Initial size',
     GRAVITATIONAL_CONSTANT: 'Gravitational constant',
+    FILL: 'Fill color',
 };
 
 class App extends React.PureComponent {
