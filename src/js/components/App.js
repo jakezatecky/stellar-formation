@@ -96,6 +96,7 @@ class App extends React.PureComponent {
                     </span>
                     <span className="value">
                         <input
+                            className="form-control form-control-sm"
                             id={id}
                             name={configKey}
                             type={type}
@@ -115,7 +116,7 @@ class App extends React.PureComponent {
                         <div className="controls">
                             {controls}
                         </div>
-                        <button type="button" onClick={this.onUpdate}>
+                        <button className="btn btn-primary" type="button" onClick={this.onUpdate}>
                             Update
                         </button>
                     </form>
@@ -133,7 +134,7 @@ class App extends React.PureComponent {
                             </span>
                         </li>
                         <li>
-                            <button id="reset-cursor" type="button">Reset</button>
+                            <button className="btn btn-secondary" id="reset-cursor" type="button">Reset</button>
                         </li>
                     </ul>
                 </aside>

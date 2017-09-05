@@ -1,3 +1,5 @@
+@import "../../node_modules/bootstrap/scss/bootstrap";
+
 $canvas-border: #d3d3d3;
 
 body {
@@ -29,7 +31,7 @@ canvas {
   flex-direction: column;
 
   > button {
-    margin-top: 10px;
+    margin-top: 5px;
     margin-left: auto;
   }
 }
@@ -42,8 +44,9 @@ canvas {
 
     > * {
       display: table-cell;
-      padding: 0 5px;
+      padding: 5px;
       width: 1%;
+      vertical-align: middle;
     }
 
     > .header {
@@ -51,20 +54,28 @@ canvas {
       white-space: nowrap;
       font-weight: bold;
     }
+
+    > .value {
+      width: 100%;
+    }
   }
 
-  .value {
-    width: 100%;
+  label {
+    margin-bottom: 0;
   }
 }
 
 .cursor {
   display: flex;
+  align-content: center;
   margin-top: 20px;
   padding: 0;
   list-style: none;
 
   > li {
+    display: flex;
+    align-content: center;
+
     > * {
       padding: 0 5px;
     }
