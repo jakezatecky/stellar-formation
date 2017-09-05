@@ -4,12 +4,30 @@ import shortid from 'shortid';
 import { startFormation, defaultConfig } from 'js/stellarFormation';
 
 const configMap = {
-    FRAMES_PER_SECOND: 'Frames per second',
-    MAX_POINTS: 'Initial points',
-    DEFAULT_MASS: 'Initial mass',
-    DEFAULT_SIZE: 'Initial size',
-    GRAVITATIONAL_CONSTANT: 'Gravitational constant',
-    FILL: 'Fill color',
+    FRAMES_PER_SECOND: {
+        label: 'Frames per second',
+        type: 'number',
+    },
+    MAX_POINTS: {
+        label: 'Initial points',
+        type: 'number',
+    },
+    DEFAULT_MASS: {
+        label: 'Initial mass',
+        type: 'number',
+    },
+    DEFAULT_SIZE: {
+        label: 'Initial size',
+        type: 'number',
+    },
+    GRAVITATIONAL_CONSTANT: {
+        label: 'Gravitational constant',
+        type: 'input',
+    },
+    FILL: {
+        label: 'Fill color',
+        type: 'color',
+    },
 };
 
 class App extends React.PureComponent {
@@ -69,17 +87,18 @@ class App extends React.PureComponent {
         const { config, cursor } = this.state;
         const controls = Object.keys(configMap).map((configKey) => {
             const id = shortid.generate();
+            const { label, type } = configMap[configKey];
 
             return (
                 <div key={configKey} className="form-group">
                     <span className="header">
-                        <label htmlFor={id}>{configMap[configKey]}</label>
+                        <label htmlFor={id}>{label}</label>
                     </span>
                     <span className="value">
                         <input
                             id={id}
                             name={configKey}
-                            type="input"
+                            type={type}
                             value={config[configKey]}
                             onChange={this.onConfigChange}
                         />
