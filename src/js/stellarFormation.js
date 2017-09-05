@@ -5,7 +5,7 @@ const defaultConfig = {
     DEFAULT_MASS: 1,
     DEFAULT_SIZE: 1,
     GRAVITATIONAL_CONSTANT: 1e-2,
-    FILL: '#555',
+    FILL: '#555555',
 };
 
 const startFormation = (props, config = defaultConfig) => {
