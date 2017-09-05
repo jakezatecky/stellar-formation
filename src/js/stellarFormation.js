@@ -50,7 +50,7 @@ const startFormation = (props, config = defaultConfig) => {
     d3.select('canvas').call(
         d3.zoom()
             .scaleExtent([1 / 4, 4])
-            .on('zoom', zoom)
+            .on('zoom', zoom),
     );
 
     /**
@@ -60,11 +60,6 @@ const startFormation = (props, config = defaultConfig) => {
      */
     function getScaledOffset(originalLength) {
         return (originalLength - (originalLength * cursor.k)) / 2;
-    }
-
-    function zoom() {
-        cursor = d3.event.transform;
-        onCursorUpdate();
     }
 
     function onCursorUpdate() {
@@ -82,6 +77,11 @@ const startFormation = (props, config = defaultConfig) => {
         if (!interval) {
             plotCanvas(ctx, points);
         }
+    }
+
+    function zoom() {
+        cursor = d3.event.transform;
+        onCursorUpdate();
     }
 
     function getRandomInt(min, max) {
@@ -102,6 +102,23 @@ const startFormation = (props, config = defaultConfig) => {
         ctx.clearRect(0, 0, WIDTH, HEIGHT);
     }
 
+    function getVelocityTransfer(a, b, vector) {
+        // KineticEnergy = (1/2)mv^2
+        return Math.sqrt((b.mass * (b[vector] ** 2)) / a.mass) * Math.sign(a[vector]) * -1;
+    }
+
+    function coalesce(a, b) {
+        /* eslint-disable no-param-reassign */
+        a.mass += b.mass;
+        a.volume = calculateVolume(a.mass);
+        b.consumed = true;
+
+        // Assume elastic collision and transfer kinetic energy from b to slow down a
+        a.dx += getVelocityTransfer(a, b, 'dx');
+        a.dy += getVelocityTransfer(a, b, 'dy');
+        /* eslint-enable no-param re-assign */
+    }
+
     function coalescePoints(points) {
         points.forEach((a, indexA) => {
             points.forEach((b, indexB) => {
@@ -113,7 +130,8 @@ const startFormation = (props, config = defaultConfig) => {
                     // Overall distances
                     const distance = Math.sqrt((dx * dx) + (dy * dy));
 
-                    // If the two points intersect, the more massive point will consume the small point
+                    // If the two points intersect, the more massive point will consume the small
+                    // point
                     if (distance <= Math.sqrt(a.volume * b.volume) / 2) {
                         if (a.mass >= b.mass) {
                             coalesce(a, b);
@@ -122,35 +140,10 @@ const startFormation = (props, config = defaultConfig) => {
                         }
                     }
                 }
-            })
+            });
         });
 
         return points.filter(point => !point.consumed);
-    }
-
-    function coalesce(a, b) {
-        a.mass += b.mass;
-        a.volume = calculateVolume(a.mass);
-        b.consumed = true;
-
-        // Assume elastic collision and transfer kinetic energy from b to slow down a
-        a.dx += getVelocityTransfer(a, b, 'dx');
-        a.dy += getVelocityTransfer(a, b, 'dy');
-    }
-
-    function getVelocityTransfer(a, b, vector) {
-        // KineticEnergy = (1/2)mv^2
-        return Math.sqrt((b.mass * b[vector] ** 2) / a.mass) * Math.sign(a[vector]) * -1;
-    }
-
-    function gravitatePoints(points) {
-        points.forEach((a, indexA) => {
-            points.forEach((b, indexB) => {
-                if (indexA !== indexB) {
-                    gravitate(a, b);
-                }
-            })
-        });
     }
 
     function gravitate(a, b) {
@@ -159,14 +152,14 @@ const startFormation = (props, config = defaultConfig) => {
         let dy = b.y - a.y;
 
         // Overall distances
-        let distance = Math.sqrt((dx * dx) + (dy * dy));
+        const distance = Math.sqrt((dx * dx) + (dy * dy));
 
         // Normalize for direction
         dx /= distance;
         dy /= distance;
 
         // Calculate the force between the object (assumed 1 mass) and planet
-        let force = (a.mass * b.mass * config.GRAVITATIONAL_CONSTANT) / Math.pow(distance, 2);
+        const force = (a.mass * b.mass * config.GRAVITATIONAL_CONSTANT) / (distance ** 2);
 
         // Apply the force to the distance to move
         dx *= force;
@@ -177,11 +170,21 @@ const startFormation = (props, config = defaultConfig) => {
         a.dy += dy;
     }
 
+    function gravitatePoints(points) {
+        points.forEach((a, indexA) => {
+            points.forEach((b, indexB) => {
+                if (indexA !== indexB) {
+                    gravitate(a, b);
+                }
+            });
+        });
+    }
+
     function adjustPositions(points) {
         points.forEach((point, index) => {
             points[index].x += point.dx;
             points[index].y += point.dy;
-        })
+        });
     }
 
     function plotCanvas(ctx, points) {
