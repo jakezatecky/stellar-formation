@@ -43,7 +43,7 @@ class App extends React.PureComponent {
             config: { ...defaultConfig },
         };
 
-        this.interval = null;
+        this.simulation = null;
 
         this.onConfigChange = this.onConfigChange.bind(this);
         this.onCursorUpdate = this.onCursorUpdate.bind(this);
@@ -70,7 +70,7 @@ class App extends React.PureComponent {
     }
 
     onUpdate() {
-        clearInterval(this.interval);
+        this.simulation.clearInterval();
 
         this.startFormation();
     }
@@ -78,7 +78,7 @@ class App extends React.PureComponent {
     startFormation() {
         const { config } = this.state;
 
-        this.interval = startFormation({
+        this.simulation = startFormation({
             onCursorUpdate: this.onCursorUpdate,
         }, config);
     }
