@@ -1,7 +1,7 @@
 import React from 'react';
 import shortid from 'shortid';
 
-import { startFormation, defaultConfig } from 'js/stellarFormation';
+import { startSimulation, defaultConfig } from 'js/simulation';
 
 const configMap = {
     FRAMES_PER_SECOND: {
@@ -78,7 +78,7 @@ class App extends React.PureComponent {
     startFormation() {
         const { config } = this.state;
 
-        this.simulation = startFormation({
+        this.simulation = startSimulation({
             onCursorUpdate: this.onCursorUpdate,
         }, config);
     }

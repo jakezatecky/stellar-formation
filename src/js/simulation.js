@@ -8,7 +8,7 @@ const defaultConfig = {
     FILL: '#555555',
 };
 
-const startFormation = (props, config = defaultConfig) => {
+const startSimulation = (props, config = defaultConfig) => {
     const VOLUME_MULTIPLIER = config.DEFAULT_SIZE / config.DEFAULT_MASS;
     const SCROLL_SPEED = 5;
     const calculateVolume = mass => Math.log(mass * VOLUME_MULTIPLIER * Math.E);
@@ -274,5 +274,5 @@ const startFormation = (props, config = defaultConfig) => {
 
 export {
     defaultConfig,
-    startFormation,
+    startSimulation,
 };
