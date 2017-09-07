@@ -48,6 +48,7 @@ class App extends React.PureComponent {
         this.onConfigChange = this.onConfigChange.bind(this);
         this.onCursorUpdate = this.onCursorUpdate.bind(this);
         this.onUpdate = this.onUpdate.bind(this);
+        this.onReset = this.onReset.bind(this);
     }
 
     componentDidMount() {
@@ -73,6 +74,10 @@ class App extends React.PureComponent {
         this.simulation.clearInterval();
 
         this.startFormation();
+    }
+
+    onReset() {
+        this.simulation.onResetCursor();
     }
 
     startFormation() {
@@ -134,7 +139,7 @@ class App extends React.PureComponent {
                             </span>
                         </li>
                         <li>
-                            <button className="btn btn-secondary" id="reset-cursor" type="button">Reset</button>
+                            <button className="btn btn-secondary" type="button" onClick={this.onReset}>Reset</button>
                         </li>
                     </ul>
                 </aside>
