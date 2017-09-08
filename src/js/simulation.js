@@ -11,7 +11,7 @@ const defaultConfig = {
 const startSimulation = (props, config = defaultConfig) => {
     const VOLUME_MULTIPLIER = config.DEFAULT_SIZE / config.DEFAULT_MASS;
     const SCROLL_SPEED = 5;
-    const calculateVolume = mass => Math.log(mass * VOLUME_MULTIPLIER * Math.E);
+    const calculateRadius = mass => Math.log(mass * VOLUME_MULTIPLIER * Math.E);
 
     function getRandomInt(min, max) {
         const newMin = Math.ceil(min);
@@ -71,7 +71,7 @@ const startSimulation = (props, config = defaultConfig) => {
                         dx: 0,
                         dy: 0,
                         mass: config.DEFAULT_MASS,
-                        volume: calculateVolume(config.DEFAULT_MASS),
+                        radius: calculateRadius(config.DEFAULT_MASS),
                     });
 
                     numPoints += 1;
@@ -105,9 +105,11 @@ const startSimulation = (props, config = defaultConfig) => {
         }
 
         plotPositions() {
-            this.points.forEach(({ x, y, volume }) => {
+            this.points.forEach(({ x, y, radius }) => {
+                this.context.beginPath();
+                this.context.arc(x, y, radius, 0, 2 * Math.PI);
                 this.context.fillStyle = config.FILL;
-                this.context.fillRect(x, y, volume, volume);
+                this.context.fill();
             });
         }
 
@@ -128,7 +130,7 @@ const startSimulation = (props, config = defaultConfig) => {
 
                         // If the two points intersect, the more massive point will consume the
                         // small point
-                        if (distance <= Math.sqrt(a.volume * b.volume) / 2) {
+                        if (distance <= Math.sqrt(a.radius * b.radius) / 2) {
                             if (a.mass >= b.mass) {
                                 this.coalesce(a, b);
                             } else {
@@ -145,7 +147,7 @@ const startSimulation = (props, config = defaultConfig) => {
         coalesce(a, b) {
             /* eslint-disable no-param-reassign */
             a.mass += b.mass;
-            a.volume = calculateVolume(a.mass);
+            a.radius = calculateRadius(a.mass);
             b.consumed = true;
 
             // Assume elastic collision and transfer kinetic energy from b to slow down a
