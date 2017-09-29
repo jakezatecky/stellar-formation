@@ -1,5 +1,9 @@
+import seedrandom from 'seedrandom';
+import shortid from 'shortid';
+
 const d3 = window.d3;
 const defaultConfig = {
+    RANDOM_SEED: shortid.generate(),
     FRAMES_PER_SECOND: 120,
     MAX_POINTS: 1000,
     DEFAULT_MASS: 1,
@@ -12,12 +16,13 @@ const startSimulation = (props, config = defaultConfig) => {
     const VOLUME_MULTIPLIER = config.DEFAULT_SIZE / config.DEFAULT_MASS;
     const SCROLL_SPEED = 5;
     const calculateRadius = mass => Math.log(mass * VOLUME_MULTIPLIER * Math.E);
+    const random = seedrandom(config.RANDOM_SEED);
 
     function getRandomInt(min, max) {
         const newMin = Math.ceil(min);
         const newMax = Math.floor(max);
 
-        return Math.floor(Math.random() * (newMax - newMin)) + newMin;
+        return Math.floor(random() * (newMax - newMin)) + newMin;
     }
 
     function getVelocityTransfer(a, b, vector) {

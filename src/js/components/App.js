@@ -4,6 +4,10 @@ import shortid from 'shortid';
 import { startSimulation, defaultConfig } from 'js/simulation';
 
 const configMap = {
+    RANDOM_SEED: {
+        label: 'Random seed',
+        type: 'string',
+    },
     FRAMES_PER_SECOND: {
         label: 'Frames per second',
         type: 'number',
