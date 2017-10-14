@@ -1,7 +1,7 @@
 import seedrandom from 'seedrandom';
 import shortid from 'shortid';
 
-const d3 = window.d3;
+const { d3 } = window;
 const defaultConfig = {
     RANDOM_SEED: shortid.generate(),
     FRAMES_PER_SECOND: 120,
