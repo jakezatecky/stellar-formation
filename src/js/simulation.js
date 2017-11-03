@@ -1,9 +1,9 @@
+import nanoid from 'nanoid';
 import seedrandom from 'seedrandom';
-import shortid from 'shortid';
 
 const { d3 } = window;
 const defaultConfig = {
-    RANDOM_SEED: shortid.generate(),
+    RANDOM_SEED: nanoid(),
     FRAMES_PER_SECOND: 120,
     MAX_POINTS: 1000,
     DEFAULT_MASS: 1,

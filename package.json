@@ -14,11 +14,11 @@
   "dependencies": {
     "bootstrap": "4.0.0-alpha.6",
     "lodash": "^4.17.4",
+    "nanoid": "^1.0.1",
     "prop-types": "^15.5.10",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
-    "seedrandom": "^2.4.3",
-    "shortid": "^2.2.8"
+    "seedrandom": "^2.4.3"
   },
   "devDependencies": {
     "babel-core": "^6.25.0",

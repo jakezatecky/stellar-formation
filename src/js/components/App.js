@@ -1,5 +1,5 @@
+import nanoid from 'nanoid';
 import React from 'react';
-import shortid from 'shortid';
 
 import { startSimulation, defaultConfig } from 'js/simulation';
 
@@ -95,7 +95,7 @@ class App extends React.PureComponent {
     render() {
         const { config, cursor } = this.state;
         const controls = Object.keys(configMap).map((configKey) => {
-            const id = shortid.generate();
+            const id = nanoid();
             const { label, type } = configMap[configKey];
 
             return (
