@@ -33,17 +33,18 @@ const configMap = {
         type: 'color',
     },
 };
+const defaultCursor = {
+    x: '0',
+    y: '0',
+    k: '1.00',
+};
 
 class App extends React.PureComponent {
     constructor() {
         super();
 
         this.state = {
-            cursor: {
-                x: '0',
-                y: '0',
-                k: '1.00',
-            },
+            cursor: defaultCursor,
             config: { ...defaultConfig },
         };
 
@@ -76,13 +77,14 @@ class App extends React.PureComponent {
     }
 
     onUpdate() {
+        this.simulation.resetCursor();
         this.simulation.clearInterval();
 
         this.startFormation();
     }
 
     onReset() {
-        this.simulation.onResetCursor();
+        this.simulation.resetCursor();
     }
 
     startFormation() {
@@ -144,7 +146,9 @@ class App extends React.PureComponent {
                             </span>
                         </li>
                         <li>
-                            <button className="btn btn-secondary" type="button" onClick={this.onReset}>Reset</button>
+                            <button className="btn btn-secondary" type="button" onClick={this.onReset}>
+                                Reset
+                            </button>
                         </li>
                     </ul>
                 </aside>

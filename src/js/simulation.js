@@ -202,7 +202,7 @@ const startSimulation = (props, config = defaultConfig) => {
             });
         }
 
-        onResetCursor() {
+        resetCursor() {
             this.cursor.x = this.getScaledOffset(this.width);
             this.cursor.y = this.getScaledOffset(this.height);
 
