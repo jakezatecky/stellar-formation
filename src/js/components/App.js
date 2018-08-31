@@ -60,11 +60,12 @@ class App extends React.PureComponent {
     }
 
     onConfigChange(event) {
+        const { config } = this.state;
         const configKey = event.target.name;
 
         this.setState({
             config: {
-                ...this.state.config,
+                ...config,
                 [configKey]: event.target.value,
             },
         });
@@ -119,7 +120,7 @@ class App extends React.PureComponent {
 
         return (
             <div className="container">
-                <canvas id="canvas" width="750" height="750" />
+                <canvas height="750" id="canvas" width="750" />
                 <aside className="details">
                     <form className="configuration">
                         <div className="controls">
@@ -133,7 +134,7 @@ class App extends React.PureComponent {
                         <li className="position">
                             <span className="header">Position</span>
                             <span className="value">
-                                ({cursor.x}, {cursor.y})
+                                {`(${cursor.x}, ${cursor.y})`}
                             </span>
                         </li>
                         <li className="zoom">
