@@ -172,27 +172,27 @@ const startSimulation = (props, config = defaultConfig) => {
         }
 
         gravitate(a, b) {
-            // Component distances to target
-            let dx = b.x - a.x;
-            let dy = b.y - a.y;
+            // Calculate component distances to the target
+            const distanceX = b.x - a.x;
+            const distanceY = b.y - a.y;
 
-            // Overall distances
-            const distance = Math.sqrt((dx * dx) + (dy * dy));
+            // Calculate the overall distance
+            const distance = Math.sqrt((distanceX ** 2) + (distanceY ** 2));
 
-            // Normalize for direction
-            dx /= distance;
-            dy /= distance;
-
-            // Calculate the force between the object (assumed 1 mass) and planet
+            // Calculate the force between the two objects (law of universal gravitation)
             const force = (a.mass * b.mass * config.GRAVITATIONAL_CONSTANT) / (distance ** 2);
 
-            // Apply the force to the distance to move
-            dx *= force;
-            dy *= force;
+            // Normalize the direction of the force
+            let accelerationX = distanceX / distance;
+            let accelerationY = distanceY / distance;
 
-            // Apply this acceleration
-            a.dx += dx;
-            a.dy += dy;
+            // Apply the force to the direction (Newton's second law of motion)
+            accelerationX *= force / a.mass;
+            accelerationY *= force / a.mass;
+
+            // Apply the acceleration to the velocity
+            a.dx += accelerationX;
+            a.dy += accelerationY;
         }
 
         adjustPositions() {
