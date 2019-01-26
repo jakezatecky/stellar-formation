@@ -1,6 +1,6 @@
 {
   "name": "stellar-formation",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Testing around solar system formation with baryonic and dark matter.",
   "main": "gulpfile.js",
   "scripts": {
@@ -9,8 +9,8 @@
     "test-mocha": "env NODE_PATH=./src mocha ./test --recursive --require \"@babel/register\" --require ./test/setup.js",
     "test": "gulp test"
   },
-  "author": "CTP",
-  "license": "ISC",
+  "author": "Jake Zatecky",
+  "license": "MIT",
   "dependencies": {
     "bootstrap": "^4.1.3",
     "lodash": "^4.17.10",
